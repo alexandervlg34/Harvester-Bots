@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ResourcesGenerator : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _resourcePrefabs;
+    [SerializeField] private List<Resource> _resourcePrefabs;
     [SerializeField] private float _minDistanceBetweenResources = 2f;
 
     [SerializeField] private Score _score;
@@ -40,19 +40,19 @@ public class ResourcesGenerator : MonoBehaviour
             }
 
             int randomIndex = Random.Range(0, _resourcePrefabs.Count);
-            GameObject resource = _resourcePrefabs[randomIndex];
+            Resource resource = _resourcePrefabs[randomIndex];
             Quaternion resourceRotation = resource.transform.rotation;
 
-            GameObject newResource = Instantiate(resource, randomPosition, resourceRotation);
+            Resource newResource = Instantiate(resource, randomPosition, resourceRotation);
 
             if (newResource.gameObject.TryGetComponent(out GoldenCoin goldenCoin))
             {
-                goldenCoin.GoldDelivered += _score.UpdateGoldScore;
+                newResource.GoldDelivered += _score.UpdateGoldScore;
             }
 
             if (newResource.gameObject.TryGetComponent(out SilverCoin silverCoin))
             {
-                silverCoin.SilverDelivered += _score.UpdateSilverScore;
+                newResource.SilverDelivered += _score.UpdateSilverScore;
             }
 
             yield return new WaitForSeconds(3f);
@@ -84,12 +84,12 @@ public class ResourcesGenerator : MonoBehaviour
 
         if (resource.gameObject.TryGetComponent(out GoldenCoin goldenCoin))
         {
-            goldenCoin.GoldDelivered -= _score.UpdateGoldScore;
+            resource.GoldDelivered -= _score.UpdateGoldScore;
         }
 
         if (resource.gameObject.TryGetComponent(out SilverCoin silverCoin))
         {
-            silverCoin.SilverDelivered -= _score.UpdateSilverScore;
+            resource.SilverDelivered -= _score.UpdateSilverScore;
         }
     }
 }

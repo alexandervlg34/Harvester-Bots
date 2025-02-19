@@ -26,6 +26,17 @@ public class Unit : MonoBehaviour
     [SerializeField] private Base _base;
 
     [SerializeField] private ResourcesGenerator _resourcesGenerator;
+    [SerializeField] private ResourceScanner _scanner;
+
+    private UnitStateMachine _stateMachine;
+
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
+
+
+    private void Awake()
+    {
+        _stateMachine = new UnitStateMachine(this);
+    }
 
     private void Start()
     {
@@ -34,15 +45,19 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
+        _stateMachine.Update();
+
+
+        _targetResource = _scanner.TargetResource;
+
         if (_currentUnitState == NewUnitState.Idle)
         {
-            FindClosestResource();
+            
         }
+
 
         else if (_currentUnitState == NewUnitState.GoToTarget)
         {
-            FindClosestResource();
-
             if (_targetResource)
             {
                 _navMeshAgent.SetDestination(_targetResource.transform.position);
@@ -56,11 +71,15 @@ public class Unit : MonoBehaviour
             }
         }
 
+
+
         else if (_currentUnitState == NewUnitState.SelectResource)
         {
             TakeResource(_targetResource);
             SetState(NewUnitState.ReturnToBase);
         }
+
+
 
         else if (_currentUnitState == NewUnitState.ReturnToBase)
         {
@@ -74,6 +93,8 @@ public class Unit : MonoBehaviour
             }
         }
 
+
+
         else if (_currentUnitState == NewUnitState.PutResource)
         {
             DropResource(_targetResource);
@@ -84,7 +105,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void FindClosestResource()
+    /*public void FindClosestResource()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, _scanRadius, _resourceLayer);
 
@@ -105,7 +126,7 @@ public class Unit : MonoBehaviour
         _targetResource = closestResource;
         SetState(NewUnitState.GoToTarget);
     }
-
+    */
     public void SetState(NewUnitState unitState)
     {
         _currentUnitState = unitState;

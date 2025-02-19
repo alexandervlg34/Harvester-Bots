@@ -1,13 +1,6 @@
-using System;
+using UnityEngine;
 
-public class GoldenCoin : Resource
+public class GoldenCoin : MonoBehaviour
 {
-    public event Action GoldDelivered;
-
     
-
-    private void OnDisable()
-    {
-        GoldDelivered?.Invoke();
-    }
 }

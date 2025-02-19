@@ -1,12 +1,6 @@
-using System;
+using UnityEngine;
 
-public class SilverCoin : Resource
+public class SilverCoin : MonoBehaviour
 {
-    public event Action SilverDelivered;
-   
-
-    private void OnDisable()
-    {
-        SilverDelivered?.Invoke();
-    }
+    
 }
