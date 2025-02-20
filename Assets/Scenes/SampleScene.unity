@@ -548,7 +548,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &700569383
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -676,14 +676,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _carryPoint: {fileID: 449733671}
-  _scanRadius: 100
-  _resourceLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  _currentUnitState: 0
   _navMeshAgent: {fileID: 700569390}
   _distanceToSelect: 1
-  _targetResource: {fileID: 0}
   _base: {fileID: 1125481393}
   _resourcesGenerator: {fileID: 1095575428}
   _scanner: {fileID: 1320262648}
@@ -1201,7 +1195,6 @@ MonoBehaviour:
     m_Bits: 64
   _unit: {fileID: 700569389}
   _targetResource: {fileID: 0}
-  _currentUnitState: 0
 --- !u!1 &1320262647
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,7 +1230,6 @@ MonoBehaviour:
     m_Bits: 64
   _unit: {fileID: 700569389}
   _targetResource: {fileID: 0}
-  _currentUnitState: 1
 --- !u!4 &1320262649
 Transform:
   m_ObjectHideFlags: 0

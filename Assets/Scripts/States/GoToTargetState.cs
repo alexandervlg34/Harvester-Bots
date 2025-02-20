@@ -1,20 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GoToTargetState : MovementState
+public class GoToTargetState : State
 {
-    public GoToTargetState(IStateSwitcher stateSwitcher, StateMachineData data, Unit unit) : base(stateSwitcher, data, unit)
-    {
+    private Unit _unit;
+    private StateMachineData _data;
+    private UnitStateMachine _stateMachine;
+    private ResourceScanner _scanner;
 
+    public GoToTargetState(Unit unit, StateMachineData data, UnitStateMachine stateMachine, ResourceScanner scanner)
+    {
+        _unit = unit;
+        _data = data;
+        _stateMachine = stateMachine;
+        _scanner = scanner;
     }
 
-    
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+    }
 
     public override void Update()
     {
         base.Update();
 
-        StateSwitcher.SwitchState<SelectResourceState>();
+        _data.Resource = _scanner.TargetResource;
+
+        if (_data.Resource)
+        {
+            _unit.NavMeshAgent.SetDestination(_data.Resource.transform.position);
+
+            float distance = Vector3.Distance(_unit.transform.position, _data.Resource.transform.position);
+
+            if (distance < _unit.DistanceToSelect)
+            {
+                _stateMachine.ChangeState(_unit.SelectResourceState);
+            }
+        }
     }
 }

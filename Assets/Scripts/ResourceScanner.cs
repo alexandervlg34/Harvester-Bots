@@ -1,20 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceScanner : MonoBehaviour
 {
-    [SerializeField] private float _scanRadius = 1000f;
+    [SerializeField] private float _scanRadius = 100f;
     [SerializeField] private LayerMask _resourceLayer;
-
     [SerializeField] private Unit _unit;
-
     [SerializeField] private Resource _targetResource;
 
-    [SerializeField] private NewUnitState _currentUnitState;
-
     public Resource TargetResource => _targetResource;
-
 
     private void Update()
     {
@@ -38,8 +31,6 @@ public class ResourceScanner : MonoBehaviour
                 closestResource = colliders[i].GetComponent<Resource>();
             }
         }
-
         _targetResource = closestResource;
-        _unit.SetState(NewUnitState.GoToTarget);
     }
 }
